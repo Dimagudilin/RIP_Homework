@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}My Blog{% endblock %}
+{% block content %}
+    <h1>My Blog</h1>
+    {% for book in books %}
+        <h2>
+            <a href="{{ book.id }}">{{ book.title }}</a>
+        </h2>
+        <p class="date">
+            Опубликовано {{ book.publish }} автором {{ book.author }}
+        </p>
+        {{ book.body|truncatewords:30|linebreaks }}
+    {% endfor %}
+{% endblock %}
