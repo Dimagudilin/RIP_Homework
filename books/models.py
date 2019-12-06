@@ -16,7 +16,7 @@ class Book(models.Model):
     # Для URL
     slug = models.SlugField(max_length=250, unique_for_date='publish')
     # Автор
-    author = models.ForeignKey(User, related_name='blog_posts', on_delete=models.PROTECT)
+    author = models.CharField(max_length=250)
     # Описание
     desc = models.TextField()
     # Дата публикации
@@ -37,3 +37,17 @@ class Meta:
 def __str__(self):
     # Стандартное представление объекта
     return self.title
+
+
+class Comment(models.Model):
+    book = models.ForeignKey(Book, related_name='comments', on_delete='CASCADE')
+    name = models.ForeignKey(User, related_name='users', on_delete='CASCADE')
+    body = models.TextField()
+    created = models.DateTimeField(auto_now_add=True)
+    active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ('created',)
+
+    def __str__(self):
+        return 'Comment by {} on {}'.format(self.name, self.book)

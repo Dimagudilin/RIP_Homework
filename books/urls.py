@@ -5,11 +5,11 @@ from . import views
 namespace ='books'
 app_name ='books'
 
-urlpatterns = {
+urlpatterns = [
     # post views
     # url(r'^$', views.book_list, name='book_list'),
     url(r'^$', views.BookListView.as_view(), name='book_list'),
     url(r'^(?P<ident>\w+)/$',
         views.book_detail,
-        name='book_detail'),
-}
+        name='book_detail')
+]
