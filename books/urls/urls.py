@@ -1,6 +1,9 @@
+from django.conf import settings
 from django.conf.urls import url
+from django.conf.urls.static import static
+from django.urls import include
 
-from . import views
+from books import views
 
 namespace ='books'
 app_name ='books'
@@ -11,5 +14,6 @@ urlpatterns = [
     url(r'^$', views.BookListView.as_view(), name='book_list'),
     url(r'^(?P<ident>\w+)/$',
         views.book_detail,
-        name='book_detail')
+        name='book_detail'),
+
 ]

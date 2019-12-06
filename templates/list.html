@@ -1,15 +1,26 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block title %}My Blog{% endblock %}
 {% block content %}
     <h1>My Blog</h1>
     {% for book in books %}
-        <h2>
-            <a href="{{ book.id }}">{{ book.title }}</a>
-        </h2>
-        <p class="date">
-            Опубликовано {{ book.publish }} автором {{ book.author }}
-        </p>
-        {{ book.body|truncatewords:30|linebreaks }}
+        <div class="wrapper">
+            <div class="image">
+                <img src="{{book.image.url}}" alt="{{ book.title }}" width="100" height="100">
+            </div>
+            <div class="info">
+                <h2>
+                    <a href="{{ book.id }}">{{ book.title }}</a>
+                </h2>
+                <p class="author">
+                     Автор {{ book.author }}
+                </p>
+                <p class="date">
+                     Добавлена {{ book.publish }}
+                </p>
+                {{ book.body|truncatewords:30|linebreaks }}
+            </div>
+        </div>
     {% endfor %}
     {% include "paginator.html" with page=page_obj %}
 {% endblock %}

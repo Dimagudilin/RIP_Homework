@@ -27,6 +27,8 @@ class Book(models.Model):
     updated = models.DateTimeField(auto_now=True)
     # Статус обсуждения: закрыт/Открыт
     status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='draft')
+    # Картинка
+    image = models.ImageField(upload_to='books/%Y/%m/%d', blank=True)
 
 
 class Meta:

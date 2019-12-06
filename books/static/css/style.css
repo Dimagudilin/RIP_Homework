@@ -1,0 +1,36 @@
+body
+{
+    background-color: #cccccc;
+}
+#content
+{
+    background-color: #eeeeee;
+    padding-left: 10px;
+    margin-left: 30px;
+    margin-right: 500px;
+
+}
+.wrapper
+{
+    background: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.info
+{
+    padding-left: 15px;
+}
+.image
+{
+
+}
+.author
+{
+    font-size: large;
+    color: gray;
+
+}
