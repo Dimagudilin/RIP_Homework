@@ -21,16 +21,18 @@ from django.urls import path
 from django.contrib.auth.views import LoginView, LogoutView, PasswordChangeView, PasswordChangeDoneView
 
 from books import views
+namespace ='books'
+app_name ='books'
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^book/', include('books.urls.urls'), name='book'),
-    path('logout/', LogoutView.as_view()),
+    path('logout/', LogoutView.as_view(), name='logout'),
     path('login/', LoginView.as_view(), name='login', ),
     url(r'^password-change/$', PasswordChangeView.as_view(), name='password_change'),
     url(r'^password-change/done/$', PasswordChangeDoneView.as_view(), name='password_change_done'),
     url(r'^register/$', views.register, name='register'),
     url(r'^edit/$', views.edit, name='edit'),
 ]
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

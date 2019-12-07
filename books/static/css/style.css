@@ -1,6 +1,6 @@
 body
 {
-    background-color: #cccccc;
+    background-color: #eeeeee;
 }
 #content
 {
@@ -24,9 +24,10 @@ body
 {
     padding-left: 15px;
 }
-.image
+.kartinka
 {
-
+    padding-top: 5px;
+    margin-top: 5px;
 }
 .author
 {

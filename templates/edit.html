@@ -11,6 +11,9 @@
         {% csrf_token %}
         {{ user_form.as_p }}
         {{ profile_form.as_p }}
+        <a href="/password-change/" >
+            Wanna change password?
+        </a>
         <p><input type="submit" value="Save changes"></p>
     </form>
 </body>

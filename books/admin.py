@@ -28,7 +28,7 @@ admin.site.register(Comment, CommentAdmin)
 
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'date_of_birth', 'photo']
+    list_display = ['user', 'photo']
 
 
 admin.site.register(Profile, ProfileAdmin)

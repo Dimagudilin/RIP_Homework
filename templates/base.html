@@ -1,12 +1,42 @@
 {% load staticfiles %}
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>{% block title %}{% endblock %}</title>
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+    {% load bootstrap3 %}
+    {% bootstrap_javascript %}
+    {% bootstrap_css %}
 </head>
 <body>
+<nav class="navbar navbar-default" style="border-top-right-radius: 10px!important;border: 0;!important;margin-bottom: 1vw;">
+  <div style="box-shadow: 0 1px 4px rgba(0,0,0,0.5);margin-bottom: 2px;" class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="padding: 0">
+      <ul class="nav navbar-nav">
+        <li class="active"><a style="border-top-left-radius: 10px;"  href="{% url "books:book_list" %}">Главная</a></li>
+      </ul>
+        </li>
+           <form style="padding-top: 0;margin-bottom: 1px;" class="navbar-form navbar-right" role="search">
+        <div class="form-group" style="font-size: medium">
+        {% if request.user.is_authenticated %}
+            <span style="padding-top: 9px">
+            Привет, {{ request.user.first_name }}
+            <a href="{% url "logout" %}">Выйти</a>
+            </span>
+            <a href="/edit/">
+            <img src="{{request.user.profile.photo.url}}" alt="Профиль" width="40" height="40" style="padding-bottom: 3px">
+            </a>
+        {% else %}
+            <a href="{% url "login" %}">Войти</a>
+        {% endif %}
+        </div>
+      </form>
+      </ul>
+    </div>
+  </div>
+</nav>
 <div id="content">
         {% block content %}
         {% endblock %}
