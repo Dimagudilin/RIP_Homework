@@ -1,0 +1,19 @@
+<!doctype  html>
+<html  lang="en">
+<head>
+<title>form</title>
+</head>
+<body>
+    <h1>Вход</h1>
+    {% if next %}
+    <form action="/login/?next={{ next }}" method="post">
+    {%else%}
+        <form action="/login/" method="post">
+    {% endif %}
+    <p>Please, use the following form to log-in. If you don't have an account <a href="{% url "register" %}">register here</a></p>
+    {% csrf_token %}
+    {{   form }}
+    <input id="submit_btn" type="submit" value="Отправить">
+        </form>
+</body>
+</html>

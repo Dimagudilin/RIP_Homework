@@ -1,12 +1,12 @@
 from django.contrib import admin
-
+from .models import Profile
 # Register your models here.
 from books.models import Book, Comment
 
 
 # отображение полей в списке объектов
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'author', 'publish', 'status', 'author','image')
+    list_display = ('title', 'slug', 'author', 'publish', 'status', 'author', 'image')
     list_filter = ('status', 'created', 'publish', 'author')
     search_fields = ('title', 'body')
     prepopulated_fields = {'slug': ('title',)}
@@ -25,3 +25,10 @@ class CommentAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Comment, CommentAdmin)
+
+
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ['user', 'date_of_birth', 'photo']
+
+
+admin.site.register(Profile, ProfileAdmin)
