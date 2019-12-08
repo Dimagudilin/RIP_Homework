@@ -20,7 +20,7 @@ body
     flex-direction: row;
     flex-wrap: nowrap;
 }
-.wrap
+.wrapper
 {
     background: white;
     padding-left: 10px;
@@ -44,4 +44,8 @@ body
     font-size: large;
     color: gray;
 
+}
+.info
+{
+    padding-left: 10px;
 }
