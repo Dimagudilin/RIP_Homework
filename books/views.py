@@ -1,7 +1,9 @@
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
@@ -15,6 +17,8 @@ from .models import Profile
 def book_detail(request, ident):
     # Получаем книгу по id
     book = get_object_or_404(Book, id=ident)
+    name = get_object_or_404(User, id=request.user.id)
+    profile = get_object_or_404(Profile, user=name)
     # Только активные комментарии
     comments = book.comments.filter(active=True)
     if request.method == 'POST':
@@ -25,8 +29,10 @@ def book_detail(request, ident):
             new_comment = comment_form.save(commit=False)
             # Assign the current post to the comment
             new_comment.book = book
+            new_comment.name = name
             # Save the comment to the database
             new_comment.save()
+            return HttpResponseRedirect(request.path)
     else:
         comment_form = CommentForm()
     return render(request, 'detail.html', {'book': book, 'comments': comments, 'comment_form': comment_form})

@@ -1,10 +1,23 @@
 {% extends "base.html" %}
 {% block title %}{{ book.title }}{% endblock %}
 {% block content %}
-    <h1>{{ book.title }}</h1>
-    <p class="date">
-        Опубликовано {{ book.publish }} автором {{ book.author }}
-    </p>
+     <div class="wrapper">
+            <div class="kartinka">
+                <img src="{{book.image.url}}" alt="{{ book.title }}" width="300" height="450">
+            </div>
+            <div class="info" style="padding-top: 50px; padding-left: 60px" >
+                <h1>
+                    {{ book.title }}
+                </h1>
+                <p class="author" style="padding-top: 20px">
+                     Автор: {{ book.author }}
+                </p>
+                <p class="date">
+                     Добавлена {{ book.publish }}
+                </p>
+                {{ book.body|truncatewords:30|linebreaks }}
+            </div>
+        </div>
     {% with comments.count as total_comments %}
     <h2>
         {{ total_comments }} comment{{ total_comments|pluralize }}
@@ -12,11 +25,19 @@
     {% endwith %}
     {% for comment in comments %}
     <div class="comment">
+        <p class="info" style="font-weight: bold;padding-top: 10px" >
+            Comment {{ forloop.counter }}
         <p class="info">
-            Comment {{ forloop.counter }} by {{ comment.name }}
+        <span style="color:blue; ">
+            {{ comment.name.first_name }} {{ comment.name.last_name }}
+        </span>
+        <span style='color: gray;'>
             {{ comment.created }}
+        </span>
         </p>
-        {{ comment.body|linebreaks }}
+        <p class="info">
+        {{ comment.body}}
+        </p>
     </div>
     {% empty %}
         <p>There are no comments yet.</p>

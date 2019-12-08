@@ -20,7 +20,17 @@ body
     flex-direction: row;
     flex-wrap: nowrap;
 }
-.info
+.wrap
+{
+    background: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin: 15px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.comment
 {
     padding-left: 15px;
 }

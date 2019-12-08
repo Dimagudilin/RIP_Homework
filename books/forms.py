@@ -7,7 +7,7 @@ from books.models import Comment, Profile
 class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
-        fields = ('name', 'body')
+        fields = ('body',)
 
 
 class UserRegistrationForm(forms.ModelForm):
@@ -24,10 +24,12 @@ class UserRegistrationForm(forms.ModelForm):
             raise forms.ValidationError('Passwords don\'t match.')
         return cd['password2']
 
+
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'email')
+
 
 class ProfileEditForm(forms.ModelForm):
     class Meta:
