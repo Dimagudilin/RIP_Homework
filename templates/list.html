@@ -1,25 +1,14 @@
 {% extends "base.html" %}
+{%  load staticfiles %}
 {% block title %}Каталог книг{% endblock %}
 {% block content %}
     <h1>Каталог книг</h1>
-    {% for book in books %}
-        <div class="wrapper">
-            <div class="kartinka">
-                <img src="{{book.image.url}}" alt="{{ book.title }}" width="100" height="100">
-            </div>
-            <div class="info" style="padding-left:10px">
-                <h2>
-                    <a href="{{ book.id }}">{{ book.title }}</a>
-                </h2>
-                <p class="author">
-                     Автор {{ book.author }}
-                </p>
-                <p class="date">
-                     Добавлена {{ book.publish }}
-                </p>
-                {{ book.body|truncatewords:30|linebreaks }}
-            </div>
-        </div>
-    {% endfor %}
-    {% include "paginator.html" with page=page_obj %}
+    {% include page_template %}
+    {% block js %}
+    {{ block.super }}
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="{% static "js/paginator.js" %}"></script>
+    <script>$.endlessPaginate({paginateOnScroll: true});</script>
+    {% endblock %}
+
 {% endblock %}

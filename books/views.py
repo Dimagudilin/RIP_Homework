@@ -8,6 +8,8 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
 from django.utils.translation import gettext as _
+from el_pagination.views import AjaxListView
+
 from books.forms import CommentForm, UserRegistrationForm, UserEditForm, ProfileEditForm
 from books.models import Book
 from .models import Profile
@@ -39,15 +41,14 @@ def book_detail(request, ident):
 
 
 # Список книг
-class BookListView(LoginRequiredMixin, ListView):
-    queryset = Book.objects.all()
+class BookListView(LoginRequiredMixin, AjaxListView):
     # Контекстная переменная (на странице)
     context_object_name = 'books'
-    # Количество книг на странице
-    paginate_by = 4
     # Название шаблона
     template_name = 'list.html'
-
+    page_template = 'entry_list_page.html'
+    def get_queryset(self):
+        return Book.objects.all()
 
 # Форма регистрации
 def register(request):
