@@ -1,10 +1,12 @@
+import json
+
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.core import serializers
 from django.core.exceptions import ValidationError
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import HttpResponseRedirect, JsonResponse, HttpResponse
 from django.shortcuts import get_object_or_404, render, redirect
 from django.utils.decorators import method_decorator
 from django.views.generic import ListView
@@ -27,7 +29,7 @@ def book_detail(request, ident):
     profile = get_object_or_404(Profile, user=name)
     # Только активные комментарии
     comments = book.comments.filter(active=True)
-    if request.method == 'POST' and request.is_ajax:
+    if request.method == 'POST':
         # A comment was posted
         comment_form = CommentForm(request.POST, request.FILES)
         if comment_form.is_valid():
@@ -36,13 +38,22 @@ def book_detail(request, ident):
             # Assign the current post to the comment
             new_comment.book = book
             new_comment.name = name
-            print(request.FILES.read())
             # Save the comment to the database
             new_comment.save()
-            ser_instance = serializers.serialize('json', [new_comment, ])
-            return JsonResponse({"instance": ser_instance}, status=200)
+            #json
+            response_data = dict()
+            response_data["book"] = book.id
+            response_data["name"] = name.id
+            response_data["body"] = new_comment.body
+            return HttpResponse(
+                json.dumps(response_data),
+                content_type="application/json"
+            )
         else:
-            return JsonResponse({"error": comment_form.errors}, status=400)
+            return HttpResponse(
+                json.dumps({"nothing to see": "this isn't happening"}),
+                content_type="application/json"
+            )
     else:
         comment_form = CommentForm()
     return render(request, 'detail.html', {'book': book, 'comments': comments, 'comment_form': comment_form})

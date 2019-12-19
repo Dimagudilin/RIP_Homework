@@ -49,6 +49,7 @@
     {% empty %}
         <p>There are no comments yet.</p>
     {% endfor %}
+    <div id="review-cards" style="padding-left: 10px"></div>>
     {% if new_comment %}
         <h2>Your comment has been added.</h2>
     {% else %}
@@ -57,7 +58,7 @@
         <form enctype="multipart/form-data" action="." method="post" id="newcomment">
             {{ comment_form.as_p }}
             {% csrf_token %}
-            <p><input type="submit" value="Добавить"></p>
+            <p><input type="submit" value="Добавить"  id="product-form-button"></p>
         </form>
         </div>
     {% endif %}
@@ -83,10 +84,20 @@
                 // on successfull creating object
                 // 1. clear the form.
                 $("#newcomment").trigger('reset');
-                alert(response.toString())
-                var instance = JSON.parse(response["instance"]);
-                var fields = instance[0]["fields"];
-                $("#hello tbody").prepend(
+                var name=response['name'];
+                var body=response['body'];
+                 $('#review-cards').append("<div class=\"commen\">"+
+        "<p class=\"info\" style=\"font-weight: bold;padding-top: 10px\" > Ваш комментарий"+
+        "<p class=\"info\">"+
+        "<span style=\"color:blue; \">"+
+        "</span>"+
+        "<span style=\"color: gray;\">"+
+        "</span>"+
+        "</p>"+
+        "<p class=\"info\">"+
+        body+
+        "</p>"+
+    "</div>")
             },
             error: function (response) {
                 // alert the error if any error occured
@@ -94,6 +105,25 @@
             }
         })
     })
+$(document).ready(
+        function () {
+            // TODO: Вынести валидацию и запрос в отдельные js-файлы
+            // Валидация страницы добавления продукта
+            alert('helloworld')
+            $('#newcomment').validate({
+                    body: {
+                        required: true,
+                        minlength: 10,
+                        maxlength: 40
+                    },
+                    imagin: {
+                        required: true
+                    },
+                success: function(){
+                    $("#product-form-button").attr('disabled', false);
+                }
+            })
+            });
 </script>
 {% endblock javascript %}
 {% endblock %}
