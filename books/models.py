@@ -50,6 +50,7 @@ class Comment(models.Model):
     body = models.TextField()
     created = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+    imagin = models.ImageField(upload_to='books/%Y/%m/%d', blank=True)
 
     class Meta:
         ordering = ('created',)

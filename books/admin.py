@@ -18,7 +18,7 @@ admin.site.register(Book, PostAdmin)
 
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('name', 'book', 'created', 'active')
+    list_display = ('name', 'book', 'created', 'active', 'imagin')
     list_filter = ('active', 'created')
     search_fields = ('name', 'body')
     raw_id_fields = ('book', 'name')

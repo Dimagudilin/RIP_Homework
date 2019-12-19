@@ -23,6 +23,7 @@
         {{ total_comments }} комментари{{ total_comments|pluralize:"й,ев" }}
     </h2>
     {% endwith %}
+    <div id="hello">
     {% for comment in comments %}
     <div class="comment">
         <p class="info" style="font-weight: bold;padding-top: 10px" >
@@ -38,19 +39,61 @@
         <p class="info">
         {{ comment.body}}
         </p>
+        {% if comment.imagin %}
+        <p class="imaginate" style="width: 100px;height: 100px">
+            <img src="{{comment.imagin.url}}" alt="Картинка" width="80" height="110" style="padding-bottom: 3px; padding-left: 10px  ">
+        </p>
+        {% endif %}
     </div>
+        </div>
     {% empty %}
         <p>There are no comments yet.</p>
     {% endfor %}
     {% if new_comment %}
         <h2>Your comment has been added.</h2>
     {% else %}
+        <div style="padding-left: 10px">
         <h2>Добавить комментарий</h2>
-        <form action="." method="post">
+        <form enctype="multipart/form-data" action="." method="post" id="newcomment">
             {{ comment_form.as_p }}
             {% csrf_token %}
             <p><input type="submit" value="Добавить"></p>
         </form>
+        </div>
     {% endif %}
 {{ book.body|linebreaks }}
+{% block javascript %}
+<script>
+    /*
+        On submiting the form, send the POST ajax
+        request to server and after successfull submission
+        display the object.
+    */
+    $("#newcomment").submit(function (e) {
+        // preventing from page reload and default actions
+        e.preventDefault();
+        // serialize the data for sending the form data.
+        var serializedData = $(this).serialize();
+        // make POST ajax call
+        $.ajax({
+            type: 'POST',
+            url: "{% url 'books:book_detail' ident=book.id %}",
+            data: serializedData,
+            success: function (response) {
+                // on successfull creating object
+                // 1. clear the form.
+                $("#newcomment").trigger('reset');
+                alert(response.toString())
+                var instance = JSON.parse(response["instance"]);
+                var fields = instance[0]["fields"];
+                $("#hello tbody").prepend(
+            },
+            error: function (response) {
+                // alert the error if any error occured
+                alert(response["responseJSON"]["error"]);
+            }
+        })
+    })
+</script>
+{% endblock javascript %}
 {% endblock %}
